@@ -1,0 +1,35 @@
+# Git highlighting from http://noqqe.de/blog/2012/03/10/git-shell-environment-tricks/
+GIT_THEME_PROMPT_DIRTY='*'
+
+function git_prompt_info() {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo -e " (${ref#refs/heads/}$(parse_git_dirty))"
+}
+
+function parse_git_dirty {
+ if [[ -n $(git status -s 2> /dev/null |grep -v ^# | grep -v "working directory clean" ) ]]; then
+     echo -e "$GIT_THEME_PROMPT_DIRTY"
+ else
+   echo -e "$GIT_THEME_PROMPT_CLEAN"
+ fi
+}
+
+function myprompt {
+  EXITSTATUS="$?"
+  STOPPED="$(jobs -s | wc -l | tr -d " ")"
+  RUNNING="$(jobs -r | wc -l | tr -d " ")"
+  CUR_TTY=$(tty | sed -e "s/.*pts\(.*\)/\1/")
+  BOLD="\[\033[1m\]"
+  RED="\[\033[1;31m\]"
+  OFF="\[\033[m\]"
+  JOBS=${RUNNING}r/${STOPPED}s
+  if [ "$EXITSTATUS" -eq "0" ]; then
+    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]\$${OFF} "
+  else
+    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]${OFF}${RED}\$${OFF} "
+  fi
+  PS2="${BOLD}>${OFF} "
+}
+
+PROMPT_COMMAND=myprompt
+
