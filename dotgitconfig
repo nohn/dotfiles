@@ -1,14 +1,15 @@
 [alias]
-    stat = status
-    co   = checkout
-    # Taken from http://coderwall.com/p/euwpig?i=3&p=1&t=git
-    lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	stat = status
+	co   = checkout
+	# Taken from http://coderwall.com/p/euwpig?i=3&p=1&t=git
+	lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	unstage = reset HEAD
 
 [color]
-    branch = auto
-    status = auto
-    diff   = auto
-    ui     = auto
+	branch = auto
+	status = auto
+	diff   = auto
+	ui     = auto
 
 [user]
 	name = Sebastian Nohn
