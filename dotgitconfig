@@ -4,7 +4,7 @@
 	# Taken from http://coderwall.com/p/euwpig?i=3&p=1&t=git
 	lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	unstage = reset HEAD
-	starepo = "!sh -c 'git stash && git pull --rebase && git stash pop"
+	starepo = "!sh -c 'git stash && git pull --rebase && git stash pop'"
 
 [color]
 	branch = auto
