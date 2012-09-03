@@ -24,9 +24,9 @@ function myprompt {
   OFF="\[\033[m\]"
   JOBS=${RUNNING}r/${STOPPED}s
   if [ "$EXITSTATUS" -eq "0" ]; then
-    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]\$${OFF} "
+    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]\n\$${OFF} "
   else
-    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]${OFF}${RED}\$${OFF} "
+    PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]${OFF}\n${RED}\$${OFF} "
   fi
   PS2="${BOLD}>${OFF} "
 }
