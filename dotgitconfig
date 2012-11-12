@@ -5,6 +5,7 @@
 	lg   = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	unstage = reset HEAD
 	starepo = "!sh -c 'git stash && git pull --rebase && git stash pop'"
+	starepocopu = "!sh -c 'git stash && git pull --rebase && git stash pop && git commit -a && git push'"
 
 [color]
 	branch = auto
@@ -14,6 +15,6 @@
 
 [user]
 	name = Sebastian Nohn
-	email = sebastian@nohn.net
+	email = sebastian.nohn@ligatus.com
 [push]
 	default = upstream
