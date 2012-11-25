@@ -1,5 +1,6 @@
 # Git highlighting from http://noqqe.de/blog/2012/03/10/git-shell-environment-tricks/
 GIT_THEME_PROMPT_DIRTY='*'
+GIT_THEME_PROMPT_UNPUSHED='+'
 
 function git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -8,9 +9,16 @@ function git_prompt_info() {
 
 function parse_git_dirty {
  if [[ -n $(git status -s 2> /dev/null |grep -v ^# | grep -v "working directory clean" ) ]]; then
-     echo -e "$GIT_THEME_PROMPT_DIRTY"
+     echo -ne "$GIT_THEME_PROMPT_DIRTY"
  else
-   echo -e "$GIT_THEME_PROMPT_CLEAN"
+     echo -ne "$GIT_THEME_PROMPT_CLEAN"
+ fi
+ GIT_CURRENT_BRANCH=$(git name-rev --name-only HEAD)
+ GIT_ORIGIN_UNPUSHED=$(git log origin/$GIT_CURRENT_BRANCH..$GIT_CURRENT_BRANCH --oneline 2>&1 | awk '{ print $1 }')
+ if [[ $GIT_ORIGIN_UNPUSHED != "" ]]; then
+     echo -e "$GIT_THEME_PROMPT_UNPUSHED"
+ else 
+     echo -e "$GIT_THEME_PROMPT_CLEAN"
  fi
 }
 
@@ -28,7 +36,7 @@ function myprompt {
   else
     PS1="${BOLD}\u@\h[${JOBS}]:\w\[\$(git_prompt_info)\]${OFF}\n${RED}\$${OFF} "
   fi
-  PS2="${BOLD}>${OFF} "
+  PS2="${BOLD}> ${OFF} "
 }
 
 PROMPT_COMMAND=myprompt
