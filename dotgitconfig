@@ -6,6 +6,7 @@
 	unstage     = reset HEAD
 	up          = "!sh -c 'git stash && git pull --rebase && git stash pop'"
 	starepocopu = "!sh -c 'git stash && git pull --rebase && git stash pop && git commit -a && git push'"
+        wd          = diff --word-diff
 
 [color]
 	branch = auto
