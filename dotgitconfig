@@ -7,6 +7,7 @@
 	up          = "!sh -c 'git stash && git pull --rebase && git stash pop'"
 	starepocopu = "!sh -c 'git stash && git pull --rebase && git stash pop && git commit -a && git push'"
         wd          = diff --word-diff
+	update-externals = submodule update --init --recursive
 
 [color]
 	branch = auto
@@ -19,3 +20,6 @@
 	email = sebastian@nohn.net
 [push]
 	default = upstream
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
