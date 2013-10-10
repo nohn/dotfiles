@@ -1,0 +1,22 @@
+ServerAliveInterval 10
+ServerAliveCountMax 3
+Compression yes
+HashKnownHosts no
+TCPKeepAlive yes
+PermitLocalCommand yes
+
+Host *
+    ForwardAgent yes
+    ForwardX11 no
+
+Host *.live.*
+    LocalCommand setterm -term linux -back red -fore white -clear rest
+
+Host *.qa.*
+    LocalCommand setterm -term linux -back yellow -fore black -clear rest
+
+Host *.amazonaws.com
+    User ec2-user
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
