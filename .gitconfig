@@ -1,3 +1,5 @@
+[core]
+        pager = delta --dark --theme "1337"
 [alias]
 	stat        = status
 	co          = checkout
@@ -14,13 +16,12 @@
 	status = auto
 	diff   = auto
 	ui     = auto
-
 [user]
 	name = Sebastian Nohn
 	email = sebastian@nohn.net
 	signingkey = 3A641093
 [push]
-	default = upstream
+	default = current
 [branch "master"]
         remote = origin
 	merge = refs/heads/master
