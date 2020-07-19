@@ -1,3 +1,6 @@
 alias strrev="python -c 'print raw_input()[::-1]'"
 alias pt="ps faux"
 alias remove-old-kernels="dpkg -l linux-{image,headers}-* | awk '/^ii/{print $2}' | egrep '[0-9]+\.[0-9]+\.[0-9]+' | grep -v $(uname -r | cut -d- -f-2) | xargs sudo apt-get -y purge"
+alias vpn="sshuttle -r web01.fra.de.nohn.net:22 0/0 --exclude 138.68.127.1 --dns"
+alias copy="xclip -i -selection clipboard"
+alias paste="xclip -o -selection clipboard"
