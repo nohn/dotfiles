@@ -4,3 +4,4 @@ alias remove-old-kernels="dpkg -l linux-{image,headers}-* | awk '/^ii/{print $2}
 alias vpn="sshuttle -r web01.fra.de.nohn.net:22 0/0 --exclude 138.68.127.1 --dns"
 alias copy="xclip -i -selection clipboard"
 alias paste="xclip -o -selection clipboard"
+alias notouch="xinput | grep 'ELAN Touchscreen' | grep -Po 'id=\d+' | cut -d= -f2 | xargs xinput disable"
