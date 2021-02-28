@@ -1,6 +1,14 @@
 # Git highlighting from http://noqqe.de/blog/2012/03/10/git-shell-environment-tricks/
-GIT_THEME_PROMPT_DIRTY='*'
-GIT_THEME_PROMPT_UNPUSHED='+'
+
+BOLD="\[\033[1m\]"
+RED="\[\033[1;31m\]"
+GREEN="\[\033[1;32m\]"
+YELLOW="\[\033[1;33m\]"
+BLUE="\[\033[1;34m\]"
+OFF="\[\033[m\]"
+
+GIT_THEME_PROMPT_DIRTY="${RED}*${OFF}"
+GIT_THEME_PROMPT_UNPUSHED="${YELLOW}+${OFF}"
 
 function git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -9,16 +17,16 @@ function git_prompt_info() {
 
 function parse_git_dirty {
  if [[ -n $(git status -s 2> /dev/null |grep -v ^# | grep -v "working directory clean" ) ]]; then
-     echo -ne "$GIT_THEME_PROMPT_DIRTY"
+     echo -n "${GIT_THEME_PROMPT_DIRTY}"
  else
-     echo -ne "$GIT_THEME_PROMPT_CLEAN"
+     echo -n "${GIT_THEME_PROMPT_CLEAN}"
  fi
  GIT_CURRENT_BRANCH=$(git name-rev --name-only HEAD)
  GIT_ORIGIN_UNPUSHED=$(git log origin/$GIT_CURRENT_BRANCH..$GIT_CURRENT_BRANCH --oneline 2>&1 | awk '{ print $1 }')
  if [[ $GIT_ORIGIN_UNPUSHED != "" ]]; then
-     echo -e "$GIT_THEME_PROMPT_UNPUSHED"
+     echo  "${GIT_THEME_PROMPT_UNPUSHED}"
  else 
-     echo -e "$GIT_THEME_PROMPT_CLEAN"
+     echo  "${GIT_THEME_PROMPT_CLEAN}"
  fi
 }
 
@@ -27,16 +35,11 @@ function myprompt {
   STOPPED="$(jobs -s | wc -l | tr -d " ")"
   RUNNING="$(jobs -r | wc -l | tr -d " ")"
   CUR_TTY=$(tty | sed -e "s/.*pts\(.*\)/\1/")
-  BOLD="\[\033[1m\]"
-  RED="\[\033[1;31m\]"
-  GREEN="\[\033[1;32m\]"
-  BLUE="\[\033[1;34m\]"
-  OFF="\[\033[m\]"
   JOBS=${RUNNING}r/${STOPPED}s
   if [ "$EXITSTATUS" -eq "0" ]; then
-    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[\$(git_prompt_info)\]${OFF} \$${OFF} "
+    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF} \$${OFF} "
   else
-    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[\$(git_prompt_info)\]${OFF} ${RED}\$${OFF} "
+    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF} ${RED}\$${OFF} "
   fi
   PS2="${BOLD}> ${OFF} "
 }
