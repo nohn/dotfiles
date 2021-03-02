@@ -37,9 +37,9 @@ function myprompt {
   CUR_TTY=$(tty | sed -e "s/.*pts\(.*\)/\1/")
   JOBS=${RUNNING}/${STOPPED}
   if [ "$EXITSTATUS" -eq "0" ]; then
-    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF}\$${OFF} "
+    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF}\\n\$${OFF} "
   else
-    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF}${RED}\$${OFF} "
+    PS1="${GREEN}\u@\h[${JOBS}]${OFF}:${BLUE}\w${OFF}\[$(git_prompt_info)\]${OFF}${RED}\\n\$${OFF} "
   fi
   PS2="${BOLD}> ${OFF} "
 }
