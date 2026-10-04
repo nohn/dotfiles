@@ -16,18 +16,23 @@ function git_prompt_info() {
 }
 
 function parse_git_dirty {
- if [[ -n $(git status -s 2> /dev/null |grep -v ^# | grep -v "working directory clean" ) ]]; then
-     echo -n "${GIT_THEME_PROMPT_DIRTY}"
- else
-     echo -n "${GIT_THEME_PROMPT_CLEAN}"
- fi
- GIT_CURRENT_BRANCH=$(git name-rev --name-only HEAD)
- GIT_ORIGIN_UNPUSHED=$(git log origin/$GIT_CURRENT_BRANCH..$GIT_CURRENT_BRANCH --oneline 2>&1 | awk '{ print $1 }')
- if [[ $GIT_ORIGIN_UNPUSHED != "" ]]; then
-     echo  "${GIT_THEME_PROMPT_UNPUSHED}"
- else 
-     echo  "${GIT_THEME_PROMPT_CLEAN}"
- fi
+  # Not a git repository
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return
+
+  if ! git diff --quiet --ignore-submodules HEAD -- 2>/dev/null || \
+     ! git diff --cached --quiet --ignore-submodules HEAD -- 2>/dev/null; then
+      echo -n "${GIT_THEME_PROMPT_DIRTY}"
+  fi
+
+  local branch
+  branch=$(git branch --show-current)
+
+  # Only check if an upstream exists
+  if git rev-parse --abbrev-ref "${branch}@{upstream}" >/dev/null 2>&1; then
+    if [ "$(git rev-list --count @{upstream}..HEAD)" -gt 0 ]; then
+      echo -n "${GIT_THEME_PROMPT_UNPUSHED}"
+    fi
+  fi
 }
 
 function myprompt {
@@ -43,6 +48,8 @@ function myprompt {
   fi
   PS2="${BOLD}> ${OFF} "
 }
+
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
 PROMPT_COMMAND=myprompt
 
